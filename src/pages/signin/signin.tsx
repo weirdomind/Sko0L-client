@@ -68,8 +68,12 @@ const SignIn = () => {
                 _id: res.data.data.user._id,
                 name: res.data.data.user.name,
                 email: res.data.data.user.email,
-                displayPicture: res.data.data.user.displayPicture,
+                avatar: res.data.data.user.avatar,
                 about: res.data.data.user.about,
+                grade: res.data.data.user.grade,
+                subjects: res.data.data.user.subjects,
+                createdAt: res.data.data.user.createdAt,
+                phone: res.data.data.user.phone,
                 auth: true,
               })
             );

@@ -25,13 +25,6 @@ function App() {
   useEffect(() => {
     const newSoc: Socket = io(SERVER_URL);
     dispatch(setSocket(newSoc));
-    // dispatch(
-    //   setUser({
-    //     auth: true,
-    //     displayPicture:
-    //       "https://avataaars.io/?accessoriesType=Blank&avatarStyle=Circle&clotheColor=Blue02&clotheType=ShirtVNeck&eyeType=Side&eyebrowType=RaisedExcitedNatural&facialHairColor=Auburn&facialHairType=MoustacheFancy&hairColor=PastelPink&hatColor=Gray02&mouthType=Tongue&skinColor=Tanned&topType=LongHairBun",
-    //   })
-    // );
     return () => {
       newSoc.close();
     };
