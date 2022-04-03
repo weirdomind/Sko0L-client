@@ -23,7 +23,7 @@ function App() {
   const user: UserInterface = useSelector((s: StoreInterface) => s.user);
   const dispatch = useDispatch();
   useEffect(() => {
-    const newSoc: Socket = io(SERVER_URL);
+    const newSoc: Socket = io(SERVER_URL, { transports: ["websocket"] });
     dispatch(setSocket(newSoc));
     return () => {
       newSoc.close();
