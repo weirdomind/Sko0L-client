@@ -1,13 +1,16 @@
 import { Socket } from "socket.io-client";
 import ActionTypes from "./actionsconstants";
+import { ObjectId } from "mongoose";
 
-let user = {
-  _id: "",
+const defaultUser: UserInterface = {
   name: "",
   email: "",
   about: "",
-  displayPicture: "",
+  avatar: "",
   auth: false,
+  grade: "",
+  subjects: [],
+  phone: "",
 };
 
 export interface StoreInterface {
@@ -16,17 +19,21 @@ export interface StoreInterface {
 }
 
 const DefaultRootState: StoreInterface = {
-  user,
+  user: defaultUser,
   socket: null,
 };
 
 export interface UserInterface {
-  _id?: string;
-  name?: string;
-  email?: string;
+  _id?: ObjectId;
+  name: string;
+  email: string;
   about?: string;
-  displayPicture?: string;
-  auth?: boolean;
+  avatar: string;
+  phone?: string;
+  grade: string;
+  subjects: string[];
+  createdAt?: Date;
+  auth: boolean;
 }
 
 // reducer function

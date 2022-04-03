@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { toast } from "react-toastify";
 import { io, Socket } from "socket.io-client";
 import SendTo from "./components/sendtopage/sendtopage";
 import { SERVER_URL } from "./constanats";
@@ -12,6 +13,13 @@ import { setSocket, setUser } from "./redux/action";
 import { StoreInterface, UserInterface } from "./redux/reducers";
 
 function App() {
+  useEffect(() => {
+    toast.configure();
+    console.log("Configuring toast");
+
+    return () => {};
+  }, []);
+
   const user: UserInterface = useSelector((s: StoreInterface) => s.user);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -20,7 +28,8 @@ function App() {
     // dispatch(
     //   setUser({
     //     auth: true,
-    //     displayPicture: "https://avatars.githubusercontent.com/u/75091463?v=4",
+    //     displayPicture:
+    //       "https://avataaars.io/?accessoriesType=Blank&avatarStyle=Circle&clotheColor=Blue02&clotheType=ShirtVNeck&eyeType=Side&eyebrowType=RaisedExcitedNatural&facialHairColor=Auburn&facialHairType=MoustacheFancy&hairColor=PastelPink&hatColor=Gray02&mouthType=Tongue&skinColor=Tanned&topType=LongHairBun",
     //   })
     // );
     return () => {

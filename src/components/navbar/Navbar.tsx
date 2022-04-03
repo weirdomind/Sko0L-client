@@ -1,5 +1,5 @@
-import { Avatar } from "@mui/material";
-import { useState } from "react";
+import { Avatar, Menu, MenuItem, Popover } from "@mui/material";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, NavLink } from "react-router-dom";
 import { useSpring, animated } from "react-spring";
@@ -9,24 +9,16 @@ import Logo from "../logo/Logo";
 const Navbar = ({ className = "", ...props }) => {
   const [hamOpen, setHamOpen] = useState(false);
   const user: UserInterface = useSelector((s: StoreInterface) => s.user);
-  const hamSpring = useSpring({
-    from: {
-      right: "-100rem",
-      opacity: 0,
-    },
-    to: {
-      right: hamOpen ? "1.5rem" : "-100rem",
-      opacity: hamOpen ? 1 : 0,
-    },
-    duration: 500,
-    config: {
-      mass: 1,
-      tension: 300,
-      friction: 30,
-    },
-    easing: "easeInOut",
-  });
   const { pathname } = window.location;
+  // ham popover
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event: any) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
   return (
     <nav
       {...props}
@@ -84,8 +76,12 @@ const Navbar = ({ className = "", ...props }) => {
             </div>
           </div>
           <div
+            id="basic-button"
+            aria-controls={open ? "basic-menu" : undefined}
+            aria-haspopup="true"
+            aria-expanded={open ? "true" : undefined}
+            onClick={handleClick}
             className="flex items-end justify-center md:hidden"
-            onClick={() => setHamOpen(!hamOpen)}
           >
             <div className="h-full cursor-pointer rounded-md p-1 flex flex-col gap-2">
               <div className="w-10 border-white nm-flat-secondary rounded-full">
@@ -105,44 +101,53 @@ const Navbar = ({ className = "", ...props }) => {
               hamOpen ? "fixed" : "hidden"
             }`}
           />
-          <animated.div
-            style={hamSpring}
-            className={`${
-              hamOpen ? "block" : "hidden"
-            } top-12 rounded-md z-10 p-3 flex gap-2 flex-col bg-white fixed md:hidden`}
-            onClick={() => setHamOpen(!hamOpen)}
+          <Menu
+            id="basic-menu"
+            anchorEl={anchorEl}
+            open={open}
+            onClose={handleClose}
+            MenuListProps={{
+              "aria-labelledby": "basic-button",
+            }}
+            className="mt-4"
           >
-            <NavLink
-              className={(isActive) =>
-                isActive ? "text-primary" : "rounded-md hidden sm:block"
-              }
-              to="/about"
-            >
-              <div className="hover:text-white px-3 font-extralight md:px-6 py-1 hover:bg-primary text-xl duration-300 rounded-md">
-                About
-              </div>
-            </NavLink>
-            <NavLink
-              className={(isActive) =>
-                isActive ? "text-primary" : "rounded-md hidden sm:block"
-              }
-              to="/mission"
-            >
-              <div className="hover:text-white px-3 font-extralight md:px-6 py-1 hover:bg-primary text-xl duration-300 rounded-md">
-                Mission
-              </div>
-            </NavLink>
-            <NavLink
-              className={(isActive) =>
-                isActive ? "text-primary" : "rounded-md hidden sm:block"
-              }
-              to="/contact"
-            >
-              <div className="hover:text-white px-3 font-extralight md:px-6 py-1 hover:bg-primary text-xl duration-300 rounded-md">
-                Contact
-              </div>
-            </NavLink>
-          </animated.div>
+            <MenuItem onClick={handleClose}>
+              <NavLink
+                className={(isActive) =>
+                  isActive ? "text-primary" : "rounded-md hidden sm:block"
+                }
+                to="/about"
+              >
+                <div className="text-primary px-3 font-light text-lg">
+                  About
+                </div>
+              </NavLink>
+            </MenuItem>
+            <MenuItem onClick={handleClose}>
+              <NavLink
+                className={(isActive) =>
+                  isActive ? "text-primary" : "rounded-md hidden sm:block"
+                }
+                to="/mission"
+              >
+                <div className="text-primary px-3 font-light text-lg">
+                  Mission
+                </div>
+              </NavLink>
+            </MenuItem>
+            <MenuItem onClick={handleClose}>
+              <NavLink
+                className={(isActive) =>
+                  isActive ? "text-primary" : "rounded-md hidden sm:block"
+                }
+                to="/contact"
+              >
+                <div className="text-primary px-3 font-light text-lg">
+                  Contact
+                </div>
+              </NavLink>
+            </MenuItem>
+          </Menu>
         </>
       )}
     </nav>

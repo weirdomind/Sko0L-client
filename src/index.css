@@ -1,12 +1,14 @@
 /* Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Varela+Round&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Varela+Round&display=swap");
+
+/* antd */
+@import "antd/dist/antd.css";
 
 /* Tailwind CSS */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-
-.font-round{
-    font-family: 'Varela Round', sans-serif;
+.font-round {
+  font-family: "Varela Round", sans-serif;
 }
