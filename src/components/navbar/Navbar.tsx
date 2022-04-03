@@ -32,7 +32,7 @@ const Navbar = ({ className = "", ...props }) => {
       <Logo />
       {user.auth ? (
         <div className="rounded-full nm-flat-secondary-lg">
-          <Avatar src={user.displayPicture} />
+          <Avatar src={user.avatar} />
         </div>
       ) : (
         <>
