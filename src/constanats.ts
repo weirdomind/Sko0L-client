@@ -3,4 +3,4 @@ export const SERVER_URL = ISDEV
   ? "http://localhost:8080"
   : (process.env.SERVER_URL || process.env.REACT_APP_SERVER_URL)!;
 
-console.log(process.env);
+console.log(SERVER_URL);
