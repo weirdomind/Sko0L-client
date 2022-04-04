@@ -1,4 +1,6 @@
+import axios from "axios";
 import { useEffect } from "react";
+import { useCookies } from "react-cookie";
 import { useDispatch, useSelector } from "react-redux";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -13,21 +15,32 @@ import { setSocket, setUser } from "./redux/action";
 import { StoreInterface, UserInterface } from "./redux/reducers";
 
 function App() {
-  useEffect(() => {
-    toast.configure();
-    console.log("Configuring toast");
-
-    return () => {};
-  }, []);
+  const [{ jwt }, setCookie] = useCookies(["jwt"]);
 
   const user: UserInterface = useSelector((s: StoreInterface) => s.user);
   const dispatch = useDispatch();
   useEffect(() => {
-    const newSoc: Socket = io(SERVER_URL, { transports: ["websocket"] });
-    dispatch(setSocket(newSoc));
-    return () => {
-      newSoc.close();
-    };
+    toast.configure();
+    if (jwt) {
+      axios
+        .post(`${SERVER_URL}/auth/verifytoken`, { token: jwt })
+        .then((res) => {
+          console.log(res.data);
+          if (res.data.success) {
+            const newSoc: Socket = io(SERVER_URL, {
+              transports: ["websocket"],
+            });
+            dispatch(setSocket(newSoc));
+            dispatch(setUser({ ...res.data.data.student, auth: true }));
+            // Closing socket on unmount
+            return () => {
+              newSoc.close();
+            };
+          } else {
+            setCookie("jwt", "", { path: "/" });
+          }
+        });
+    }
   }, []);
 
   return (
@@ -36,16 +49,16 @@ function App() {
         <Route
           path="/"
           element={user.auth ? <SendTo page="/dashboard" /> : <Home />}
-        ></Route>
+        />
         <Route
           path="/signin"
           element={user.auth ? <SendTo page="/dashboard" /> : <SignIn />}
-        ></Route>
+        />
         <Route
           path="/signup"
           element={user.auth ? <SendTo page="/dashboard" /> : <SignUp />}
-        ></Route>
-        <Route path="*" element={<NotFound />}></Route>
+        />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   );

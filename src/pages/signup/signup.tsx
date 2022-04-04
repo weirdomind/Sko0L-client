@@ -156,7 +156,6 @@ const SignUp = () => {
         toast.dismiss(toastId);
       }, 5000);
       if (res.data.success) {
-        console.log(res.data.student);
         toast.update(toastId, {
           render: "Successfully signed up",
           type: "success",
@@ -164,7 +163,9 @@ const SignUp = () => {
           autoClose: 3000,
         });
         dispatch(setUser({ ...res.data.student, auth: true }));
-        setCookie("jwt", res.data.token, { path: "/" });
+        console.log(res.data.data.token);
+
+        setCookie("jwt", res.data.data.token, { path: "/" });
         navigate("/dashboard");
       } else {
         toast.done(toastId);
@@ -327,7 +328,6 @@ const SignUp = () => {
                   multiple
                   value={data.subjects}
                   onChange={(e) => {
-                    console.log(e);
                     setData((prevData: SignUpDataInterface) => ({
                       ...prevData,
                       subjects: [...e.target.value],

@@ -32,7 +32,7 @@ function Loader() {
   );
   useEffect(() => {
     return () => {
-      setProps(useSpring({}));
+      setProps(null);
     };
   }, []);
   return (

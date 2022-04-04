@@ -1,4 +1,4 @@
-import { Avatar, Menu, MenuItem, Popover } from "@mui/material";
+import { Avatar, Button, Menu, MenuItem, Popover } from "@mui/material";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, NavLink } from "react-router-dom";
@@ -19,6 +19,16 @@ const Navbar = ({ className = "", ...props }) => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  // menu for auth===true
+  const [anchorEl2, setAnchorEl2] = React.useState<null | HTMLElement>(null);
+  const open2 = Boolean(anchorEl2);
+  const handleClick2 = (event: any) => {
+    setAnchorEl2(event.currentTarget);
+  };
+  const handleClose2 = () => {
+    setAnchorEl2(null);
+  };
   return (
     <nav
       {...props}
@@ -31,8 +41,48 @@ const Navbar = ({ className = "", ...props }) => {
     >
       <Logo />
       {user.auth ? (
-        <div className="rounded-full nm-flat-secondary-lg">
-          <Avatar src={user.avatar} />
+        <div>
+          <div
+            id="basic-button"
+            aria-controls={open2 ? "basic-menu" : undefined}
+            aria-haspopup="true"
+            aria-expanded={open2 ? "true" : undefined}
+            onClick={handleClick2}
+            className="rounded-full w-10 h-10 nm-flat-secondary-lg"
+          >
+            <Avatar
+              className="transform scale-105 -translate-y-1"
+              src={user.avatar}
+            />
+          </div>
+          <Menu
+            id="basic-menu"
+            anchorEl={anchorEl2}
+            open={open2}
+            onClose={handleClose2}
+            MenuListProps={{
+              "aria-labelledby": "basic-button",
+            }}
+            className="fixed right-20"
+          >
+            <MenuItem onClick={handleClose2}>
+              <NavLink
+                className={(isActive) =>
+                  isActive ? "text-primary" : "rounded-md hidden sm:block"
+                }
+                to="/dashboard"
+              >
+                <div className="text-primary px-3 font-light text-lg">
+                  Dashboard
+                </div>
+              </NavLink>
+            </MenuItem>
+            <MenuItem onClick={handleClose2}>
+              <Button className="w-full" color="error">
+                Log Out
+              </Button>
+            </MenuItem>
+          </Menu>
         </div>
       ) : (
         <>
