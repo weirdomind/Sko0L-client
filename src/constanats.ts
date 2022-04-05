@@ -1,3 +1,6 @@
+import dotenv from "dotenv";
+dotenv.config();
+
 export const ISDEV = process.env.NODE_ENV === "development";
 export const SERVER_URL = ISDEV
   ? "http://localhost:8080"
