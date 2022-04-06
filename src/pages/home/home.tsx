@@ -8,7 +8,7 @@ const Home = () => {
   return (
     <Layout>
       <WavyForHome className="" />
-      <div className="w-full min-h-screen px-0 md:px-16 py-10 sm:pt-40 md:py-0">
+      <div className="w-screen min-h-screen px-0 md:px-16 py-10 sm:pt-40 md:py-0">
         <div className="flex flex-col pt-40 md:pt-20 h-nonav justify-center items-center md:flex-row gap-10">
           <div className="flex w-3/4 md:w-1/2 gap-4 md:gap-10 flex-col justify-center">
             <div className="font-bold">

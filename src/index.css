@@ -1,8 +1,16 @@
-/* Fonts */
 @import url("https://fonts.googleapis.com/css2?family=Varela+Round&display=swap");
 
+:root {
+  --primary-color: #1b1b3a;
+  --secondary-color: #6159e6;
+}
+
+/* Fonts */
+* {
+  font-family: "Varela Round", sans-serif;
+}
 /* antd */
-@import "antd/dist/antd.css";
+/* @import "antd/dist/antd.css"; */
 
 /* Tailwind CSS */
 @tailwind base;
@@ -11,4 +19,29 @@
 
 .font-round {
   font-family: "Varela Round", sans-serif;
+}
+
+/* Scrollbar */
+/* width */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+  display: contents;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 2px grey;
+  border-radius: 10px;
+  background-color: var(--primary-color);
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: var(--secondary-color);
+  border-radius: 10px;
+}
+html {
+  overflow-x: hidden;
+  margin-right: calc(-1 * (100vw - 100%));
 }

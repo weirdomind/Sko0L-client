@@ -7,7 +7,7 @@ const Footer = ({ className = "" }) => {
   return (
     <footer
       className={
-        "w-full bg-secondary text-white px-10 md:px-32 py-10 " + className
+        "w-screen bg-secondary text-white px-10 md:px-32 py-10 " + className
       }
     >
       <div className="flex justify-between items-baseline ">

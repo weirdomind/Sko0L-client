@@ -186,7 +186,7 @@ const SignUp = () => {
 
   return (
     <Layout>
-      <div className="w-full min-h-screen pt-16 px-0 md:px-16">
+      <div className="w-screen min-h-screen pt-16 px-0 md:px-16">
         <div className="flex min-h-nonav justify-around items-center">
           <div className="max-w-md hidden lg:block">
             <img src={auth} alt="Sign up" />

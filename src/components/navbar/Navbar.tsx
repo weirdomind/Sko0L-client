@@ -35,7 +35,7 @@ const Navbar = ({ className = "", ...props }) => {
       className={
         `fixed select-none bg-secondary backdrop-blur-[1.5px] ${
           pathname !== "/" ? "bg-opacity-90" : "bg-opacity-100"
-        } bg-opacity-90 z-30 top-0 left-0 flex px-6 md:px-10 w-full h-12 py-8 justify-between items-center duration-300 ` +
+        } bg-opacity-90 z-30 top-0 left-0 flex px-6 md:px-10 w-screen h-12 py-8 justify-between items-center duration-300 ` +
         className
       }
     >
@@ -145,12 +145,6 @@ const Navbar = ({ className = "", ...props }) => {
               </div>
             </div>
           </div>
-          <div
-            onClick={() => setHamOpen((ho) => !ho)}
-            className={`w-screen h-screen bg-black bg-opacity-5 top-0 left-0 ${
-              hamOpen ? "fixed" : "hidden"
-            }`}
-          />
           <Menu
             id="basic-menu"
             anchorEl={anchorEl}

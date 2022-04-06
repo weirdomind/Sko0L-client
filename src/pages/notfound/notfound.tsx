@@ -4,7 +4,7 @@ import Layout from "../../components/layout/Layout";
 const NotFound = () => {
   return (
     <Layout>
-      <div className="w-full flex flex-col justify-center h-nonav items-center pt-16 md:pt-0 px-0 md:px-16">
+      <div className="w-screen flex flex-col justify-center h-nonav items-center pt-16 md:pt-0 px-0 md:px-16">
         <div className="flex flex-col h-nonav justify-center items-center gap-10">
           <div className="text-3xl text-center font-black text-yellow">
             Looks like you are in the wrong classroom <br />
