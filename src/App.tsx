@@ -21,14 +21,20 @@ function App() {
   const dispatch = useDispatch();
   useEffect(() => {
     toast.configure();
+    console.log("SERVER_URL:", SERVER_URL);
+
     if (jwt) {
+      console.log("sending");
       server
-        .post(`${SERVER_URL}/auth/verifytoken`, { token: jwt })
+        .post(`/auth/verifytoken`, { token: jwt })
         .then((res) => {
           console.log(res.data);
           if (res.data.success) {
             const newSoc: Socket = io(SERVER_URL, {
               transports: ["websocket"],
+            });
+            newSoc.on("connect", () => {
+              console.log("connected to socket");
             });
             dispatch(setSocket(newSoc));
             dispatch(setUser({ ...res.data.data.student, auth: true }));
@@ -39,7 +45,8 @@ function App() {
           } else {
             setCookie("jwt", "", { path: "/" });
           }
-        });
+        })
+        .catch(console.error);
     }
   }, []);
 

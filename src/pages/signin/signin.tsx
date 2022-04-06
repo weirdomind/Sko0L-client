@@ -59,49 +59,49 @@ const SignIn = () => {
       });
     } else {
       setIsSigningIn(true);
-      server
-        .post(`${SERVER_URL}/api/v1/user/auth/signin`, data)
-        .then((res) => {
-          if (res.data.res) {
-            dispatch(
-              setUser({
-                _id: res.data.data.user._id,
-                name: res.data.data.user.name,
-                email: res.data.data.user.email,
-                avatar: res.data.data.user.avatar,
-                about: res.data.data.user.about,
-                grade: res.data.data.user.grade,
-                subjects: res.data.data.user.subjects,
-                createdAt: res.data.data.user.createdAt,
-                phone: res.data.data.user.phone,
-                auth: true,
-              })
-            );
-            notification.success({
-              message: "Success",
-              description: res.data.msg,
-              placement: "bottomRight",
-            });
-            setCookie("jwt", res.data.data.token, { path: "/" });
+      // server
+      //   .post(`/api/v1/user/auth/signin`, data)
+      //   .then((res) => {
+      //     if (res.data.res) {
+      //       dispatch(
+      //         setUser({
+      //           _id: res.data.data.user._id,
+      //           name: res.data.data.user.name,
+      //           email: res.data.data.user.email,
+      //           avatar: res.data.data.user.avatar,
+      //           about: res.data.data.user.about,
+      //           grade: res.data.data.user.grade,
+      //           subjects: res.data.data.user.subjects,
+      //           createdAt: res.data.data.user.createdAt,
+      //           phone: res.data.data.user.phone,
+      //           auth: true,
+      //         })
+      //       );
+      //       notification.success({
+      //         message: "Success",
+      //         description: res.data.msg,
+      //         placement: "bottomRight",
+      //       });
+      //       setCookie("jwt", res.data.data.token, { path: "/" });
 
-            setTimeout(() => {
-              navigate("/dashboard");
-            }, 1000);
-          } else {
-            res.data.errs.forEach((err: string) => {
-              notification.error({
-                message: "Failed",
-                description: err,
-                placement: "bottomRight",
-              });
-            });
-          }
-          setIsSigningIn(false);
-        })
-        .catch((err) => {
-          console.error(err);
-          setIsSigningIn(false);
-        });
+      //       setTimeout(() => {
+      //         navigate("/dashboard");
+      //       }, 1000);
+      //     } else {
+      //       res.data.errs.forEach((err: string) => {
+      //         notification.error({
+      //           message: "Failed",
+      //           description: err,
+      //           placement: "bottomRight",
+      //         });
+      //       });
+      //     }
+      //     setIsSigningIn(false);
+      //   })
+      //   .catch((err) => {
+      //     console.error(err);
+      //     setIsSigningIn(false);
+      //   });
     }
   };
 
