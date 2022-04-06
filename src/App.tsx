@@ -1,4 +1,3 @@
-import axios from "axios";
 import { useEffect } from "react";
 import { useCookies } from "react-cookie";
 import { useDispatch, useSelector } from "react-redux";
@@ -6,6 +5,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { toast } from "react-toastify";
 import { io, Socket } from "socket.io-client";
 import SendTo from "./components/sendtopage/sendtopage";
+import server from "./configs/axiosinstance";
 import { SERVER_URL } from "./constanats";
 import Home from "./pages/home/home";
 import NotFound from "./pages/notfound/notfound";
@@ -22,7 +22,7 @@ function App() {
   useEffect(() => {
     toast.configure();
     if (jwt) {
-      axios
+      server
         .post(`${SERVER_URL}/auth/verifytoken`, { token: jwt })
         .then((res) => {
           console.log(res.data);

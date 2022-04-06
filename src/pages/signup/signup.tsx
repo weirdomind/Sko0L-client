@@ -20,7 +20,6 @@ import { UserInterface } from "../../redux/reducers";
 import {
   Avatar,
   Box,
-  CircularProgress,
   Dialog,
   DialogTitle,
   FormControl,
@@ -29,14 +28,11 @@ import {
   InputLabel,
   List,
   ListItem,
-  ListItemAvatar,
-  ListItemText,
   MenuItem,
   OutlinedInput,
   Select,
   TextField,
 } from "@mui/material";
-import axios from "axios";
 import { SERVER_URL } from "../../constanats";
 import Loader from "../../components/loader/loader";
 import { toast } from "react-toastify";
@@ -44,6 +40,7 @@ import { ToastProps } from "react-toastify/dist/types";
 import ResponseDataInterface from "../../utils/httpService";
 import { notification, Spin } from "antd";
 import { setUser } from "../../redux/action";
+import server from "../../configs/axiosinstance";
 
 const helper = (prop: string, val: string, bool: Boolean = false) => {
   if (prop === "name") {
@@ -142,7 +139,7 @@ const SignUp = () => {
     return () => {};
   }, [history, user.auth]);
   const getAvatars = () => {
-    axios.get(SERVER_URL + `/utils/avatars`).then((res) => {
+    server.get(SERVER_URL + `/utils/avatars`).then((res) => {
       setAvailableAvatars(res.data.data.avatars);
     });
   };
@@ -151,7 +148,7 @@ const SignUp = () => {
     const toastId = toast.loading("Signing up", {
       autoClose: false,
     });
-    axios.post(SERVER_URL + `/auth/signup`, data).then((res) => {
+    server.post(SERVER_URL + `/auth/signup`, data).then((res) => {
       setTimeout(() => {
         toast.dismiss(toastId);
       }, 5000);

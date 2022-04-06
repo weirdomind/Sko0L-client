@@ -4,7 +4,6 @@ import { useState } from "react";
 import { Button, notification } from "antd";
 import signin from "./signin.svg";
 import { SERVER_URL } from "../../constanats";
-import axios from "axios";
 import { useCookies } from "react-cookie";
 import { useDispatch } from "react-redux";
 ``;
@@ -12,6 +11,7 @@ import Text from "antd/lib/typography/Text";
 import { Link, useNavigate } from "react-router-dom";
 import { setUser } from "../../redux/action";
 import Layout from "../../components/layout/Layout";
+import server from "../../configs/axiosinstance";
 
 const helper = (prop: string, val: string, bool: boolean = false) => {
   if (prop === "nameOrEmail") {
@@ -59,7 +59,7 @@ const SignIn = () => {
       });
     } else {
       setIsSigningIn(true);
-      axios
+      server
         .post(`${SERVER_URL}/api/v1/user/auth/signin`, data)
         .then((res) => {
           if (res.data.res) {
