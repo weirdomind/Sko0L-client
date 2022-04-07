@@ -20,6 +20,7 @@ import { UserInterface } from "../../redux/reducers";
 import {
   Avatar,
   Box,
+  Button,
   Dialog,
   DialogTitle,
   FormControl,
@@ -413,22 +414,26 @@ const SignUp = () => {
                   )}
                 </List>
                 <Box className="p-4 w-full flex justify-around items-center">
-                  <button
+                  <Button
+                    variant="contained"
+                    color="primary"
                     onClick={() => {
                       getAvatars();
                     }}
                     className={`px-4 py-1 uppercase font-bold bg-secondary text-white rounded-md ring-secondary ring-opacity-50 focus:ring-4 focus:outline-none hover:ring-4 focus:border-secondary hover:border-secondary duration-300`}
                   >
                     <RefreshOutlined />
-                  </button>
-                  <button
+                  </Button>
+                  <Button
+                    variant="contained"
+                    color="primary"
                     onClick={() => {
                       setAvatarSelectorOpen(false);
                     }}
                     className={`px-4 py-1 uppercase font-bold bg-secondary text-white rounded-md ring-secondary ring-opacity-50 focus:ring-4 focus:outline-none hover:ring-4 focus:border-secondary hover:border-secondary duration-300`}
                   >
                     OK
-                  </button>
+                  </Button>
                 </Box>
               </Dialog>
             </Box>
@@ -437,18 +442,22 @@ const SignUp = () => {
                 step === 1 ? "justify-end" : "justify-between"
               }`}
             >
-              <button
-                type="button"
-                className={`${
-                  step > 1 ? "block" : "hidden"
-                } px-2 py-1 cursor-pointer uppercase font-bold bg-secondary text-white rounded-md ring-secondary ring-opacity-50 focus:ring-4 focus:outline-none hover:ring-4 focus:border-secondary hover:border-secondary duration-300`}
-                onClick={() => {
-                  setStep(1);
-                }}
-              >
-                Previous
-              </button>
-              <button
+              {step == 2 ? (
+                <Button
+                  variant="contained"
+                  color="primary"
+                  type="button"
+                  className={`px-2 py-1 cursor-pointer uppercase font-bold bg-secondary text-white rounded-md ring-secondary ring-opacity-50 focus:ring-4 focus:outline-none hover:ring-4 focus:border-secondary hover:border-secondary duration-300`}
+                  onClick={() => {
+                    setStep(1);
+                  }}
+                >
+                  Previous
+                </Button>
+              ) : null}
+              <Button
+                variant="contained"
+                color="primary"
                 type="button"
                 className="px-2 py-1 flex cursor-pointer justify-center items-center uppercase font-bold bg-secondary text-white rounded-md ring-secondary ring-opacity-50 focus:ring-4 focus:outline-none hover:ring-4 focus:border-secondary hover:border-secondary duration-300"
                 onClick={() => {
@@ -462,7 +471,7 @@ const SignUp = () => {
               >
                 {step === 1 ? "Next" : "Submit"}
                 <NavigateNextRounded />
-              </button>
+              </Button>
             </div>
             <Text className="text-sm font-extralight">
               already have an account?{" "}
