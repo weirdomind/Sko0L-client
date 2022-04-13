@@ -1,13 +1,14 @@
 import { Avatar, Button, Menu, MenuItem, Popover } from "@mui/material";
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useCookies } from "react-cookie";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, NavLink } from "react-router-dom";
-import { useSpring, animated } from "react-spring";
+import { setUser } from "../../redux/action";
 import { StoreInterface, UserInterface } from "../../redux/reducers";
 import Logo from "../logo/Logo";
+import { defaultUser } from "../../redux/reducers";
 
 const Navbar = ({ className = "", ...props }) => {
-  const [hamOpen, setHamOpen] = useState(false);
   const user: UserInterface = useSelector((s: StoreInterface) => s.user);
   const { pathname } = window.location;
   // ham popover
@@ -16,9 +17,11 @@ const Navbar = ({ className = "", ...props }) => {
   const handleClick = (event: any) => {
     setAnchorEl(event.currentTarget);
   };
+  const [, , removeCookie] = useCookies();
   const handleClose = () => {
     setAnchorEl(null);
   };
+  const dispatch = useDispatch();
 
   // menu for auth===true
   const [anchorEl2, setAnchorEl2] = React.useState<null | HTMLElement>(null);
@@ -78,7 +81,14 @@ const Navbar = ({ className = "", ...props }) => {
               </NavLink>
             </MenuItem>
             <MenuItem onClick={handleClose2}>
-              <Button className="w-full" color="error">
+              <Button
+                onClick={() => {
+                  removeCookie("jwt");
+                  dispatch(setUser(defaultUser));
+                }}
+                className="w-full"
+                color="error"
+              >
                 Log Out
               </Button>
             </MenuItem>

@@ -2,7 +2,7 @@ import { Socket } from "socket.io-client";
 import ActionTypes from "./actionsconstants";
 import { ObjectId } from "mongoose";
 
-const defaultUser: UserInterface = {
+export const defaultUser: UserInterface = {
   name: "",
   email: "",
   about: "",

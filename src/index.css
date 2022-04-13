@@ -1,5 +1,8 @@
 @import url("https://fonts.googleapis.com/css2?family=Varela+Round&display=swap");
 
+/* antd */
+@import "antd/dist/antd.css";
+
 :root {
   --primary-color: #1b1b3a;
   --secondary-color: #6159e6;
@@ -9,8 +12,6 @@
 * {
   font-family: "Varela Round", sans-serif;
 }
-/* antd */
-/* @import "antd/dist/antd.css"; */
 
 /* Tailwind CSS */
 @tailwind base;

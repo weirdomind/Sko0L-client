@@ -152,7 +152,7 @@ const SignUp = () => {
     server.post(SERVER_URL + `/auth/signup`, data).then((res) => {
       setTimeout(() => {
         toast.dismiss(toastId);
-      }, 5000);
+      }, 3000);
       if (res.data.success) {
         toast.update(toastId, {
           render: "Successfully signed up",
@@ -161,12 +161,9 @@ const SignUp = () => {
           autoClose: 3000,
         });
         dispatch(setUser({ ...res.data.student, auth: true }));
-        console.log(res.data.data.token);
-
         setCookie("jwt", res.data.data.token, { path: "/" });
         navigate("/dashboard");
       } else {
-        toast.done(toastId);
         toast.update(toastId, {
           render: "Error signing up",
           type: "error",

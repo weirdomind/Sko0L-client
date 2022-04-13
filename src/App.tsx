@@ -1,4 +1,3 @@
-import { notification } from "antd";
 import { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import { useDispatch, useSelector } from "react-redux";
@@ -30,7 +29,6 @@ function App() {
 
     // JWT verification
     if (jwt) {
-      console.log("sending");
       server
         .post(`/auth/verifytoken`, { token: jwt })
         .then((res) => {
@@ -41,10 +39,13 @@ function App() {
               transports: ["websocket"],
             });
             newSoc.on("connect", () => {
-              console.log("connected to socket");
+              console.log("%cconnected to socket", "color: yellow");
             });
             dispatch(setSocket(newSoc));
             dispatch(setUser({ ...res.data.data.student, auth: true }));
+            setCookie("jwt", res.data.data.token, { path: "/" });
+            console.log(res.data.data.token);
+
             // Closing socket on unmount
             return () => {
               newSoc.close();

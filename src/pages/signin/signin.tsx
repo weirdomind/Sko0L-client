@@ -1,5 +1,10 @@
 import { Box, IconButton, InputAdornment, TextField } from "@material-ui/core";
-import { Visibility, VisibilityOff } from "@mui/icons-material";
+import {
+  CheckRounded,
+  ErrorRounded,
+  Visibility,
+  VisibilityOff,
+} from "@mui/icons-material";
 import { useState } from "react";
 import { Button, notification } from "antd";
 import signin from "./signin.svg";
@@ -12,6 +17,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { setUser } from "../../redux/action";
 import Layout from "../../components/layout/Layout";
 import server from "../../configs/axiosinstance";
+import { toast } from "react-toastify";
 
 const helper = (prop: string, val: string, bool: boolean = false) => {
   if (prop === "nameOrEmail") {
@@ -59,49 +65,49 @@ const SignIn = () => {
       });
     } else {
       setIsSigningIn(true);
-      // server
-      //   .post(`/api/v1/user/auth/signin`, data)
-      //   .then((res) => {
-      //     if (res.data.res) {
-      //       dispatch(
-      //         setUser({
-      //           _id: res.data.data.user._id,
-      //           name: res.data.data.user.name,
-      //           email: res.data.data.user.email,
-      //           avatar: res.data.data.user.avatar,
-      //           about: res.data.data.user.about,
-      //           grade: res.data.data.user.grade,
-      //           subjects: res.data.data.user.subjects,
-      //           createdAt: res.data.data.user.createdAt,
-      //           phone: res.data.data.user.phone,
-      //           auth: true,
-      //         })
-      //       );
-      //       notification.success({
-      //         message: "Success",
-      //         description: res.data.msg,
-      //         placement: "bottomRight",
-      //       });
-      //       setCookie("jwt", res.data.data.token, { path: "/" });
-
-      //       setTimeout(() => {
-      //         navigate("/dashboard");
-      //       }, 1000);
-      //     } else {
-      //       res.data.errs.forEach((err: string) => {
-      //         notification.error({
-      //           message: "Failed",
-      //           description: err,
-      //           placement: "bottomRight",
-      //         });
-      //       });
-      //     }
-      //     setIsSigningIn(false);
-      //   })
-      //   .catch((err) => {
-      //     console.error(err);
-      //     setIsSigningIn(false);
-      //   });
+      const toastId = toast.loading("Signing up", {
+        autoClose: false,
+      });
+      server
+        .post(`/auth/signin`, data)
+        .then((res) => {
+          setTimeout(() => {
+            toast.dismiss(toastId);
+          }, 5000);
+          if (res.data.success) {
+            dispatch(
+              setUser({
+                ...res.data.data.user,
+                auth: true,
+              })
+            );
+            toast.update(toastId, {
+              render: "Successfully signed in",
+              type: "success",
+              icon: <CheckRounded color="success" />,
+              autoClose: 3000,
+            });
+            setCookie("jwt", res.data.data.token, { path: "/" });
+            setTimeout(() => {
+              navigate("/dashboard");
+            }, 1000);
+          } else {
+            toast.update(toastId, {
+              render: "Failed to sign in",
+              type: "error",
+              icon: <ErrorRounded color="error" />,
+              autoClose: 3000,
+            });
+            res.data.errors.map((err: Error | string) => {
+              toast.error(err);
+            });
+          }
+          setIsSigningIn(false);
+        })
+        .catch((err) => {
+          console.error(err);
+          setIsSigningIn(false);
+        });
     }
   };
 
